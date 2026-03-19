@@ -42,9 +42,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 16px;
       z-index: 1000;
-      gap: 12px;
+      gap: 8px;
+      overflow: hidden;
     }
 
     .brand {
@@ -69,8 +70,11 @@
 
     .pills {
       display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      gap: 6px;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      flex-shrink: 1;
+      min-width: 0;
     }
 
     .pill {
@@ -80,10 +84,12 @@
       background: var(--cream);
       border: 1px solid var(--border);
       border-radius: 100px;
-      padding: 4px 10px;
-      font-size: 0.68rem;
+      padding: 4px 8px;
+      font-size: 0.65rem;
       color: var(--ink-light);
       white-space: nowrap;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .dot {
@@ -103,6 +109,7 @@
       position: fixed;
       top: 56px; left: 0; right: 0; bottom: 0;
       display: flex;
+      overflow: hidden;
     }
 
     /* ── Sidebar ── */
@@ -350,8 +357,52 @@
     .pop-row b { color: var(--ink); font-weight: 500; }
 
     @media (max-width: 580px) {
-      #sidebar { width: 100%; height: 200px; border-right: none; border-bottom: 1.5px solid var(--border); }
-      #app { flex-direction: column; }
+      /* Header: hide subtitle, shrink brand */
+      .brand-sub { display: none; }
+      .brand-name { font-size: 1.1rem; }
+
+      /* Hide text in pills, show dot only on very small screens */
+      #header { height: 52px; }
+      #app { top: 52px; flex-direction: column; }
+
+      /* Sidebar goes on top as a slim panel */
+      #sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 45vh;
+        border-right: none;
+        border-bottom: 1.5px solid var(--border);
+        flex-shrink: 0;
+      }
+
+      /* Map fills remaining space */
+      #map-wrap { flex: 1; min-height: 200px; }
+
+      /* Bigger touch targets in list */
+      .cam-item { padding: 12px 14px; }
+      .cam-emoji { font-size: 20px; }
+      .cam-street { font-size: 0.8rem; }
+      .cam-dist-label { font-size: 0.68rem; }
+
+      /* Filter tabs easier to tap */
+      .ftab { padding: 10px 4px; font-size: 0.62rem; }
+
+      /* Sidebar count smaller */
+      #cam-count { font-size: 1.4rem; }
+
+      /* Pill text truncation on small screens */
+      .pill span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 70px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      /* Very small phones — just show dot in pills */
+      .pill span:last-child { display: none; }
+      .pills { gap: 4px; }
+      .pill { padding: 4px 6px; }
     }
   </style>
 </head>
